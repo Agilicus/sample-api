@@ -2,8 +2,8 @@ import os
 import logging
 import connexion
 
-from __init__ import setup_logging
-# from . import setup_logging
+# from __init__ import setup_logging
+from . import setup_logging
 
 LOG = logging.getLogger("api")
 LOG.addHandler(logging.StreamHandler())

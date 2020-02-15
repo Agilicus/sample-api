@@ -8,5 +8,5 @@ RUN pip install -r /tmp/requirements.txt \
 WORKDIR /web
 USER api
 
-ENTRYPOINT ["gunicorn", "--timeout", "10", "--keep-alive", "60", "-k", "gevent", "-b", "0.0.0.0:5000", \
+ENTRYPOINT ["gunicorn", "--timeout", "10", "--keep-alive", "60", "-b", "0.0.0.0:5000", \
             "--log-level", "info", "--access-logfile", "-", "api.main:create_app()" ]
