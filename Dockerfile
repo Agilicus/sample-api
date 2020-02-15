@@ -1,14 +1,9 @@
-FROM python:3.7 as builder
+FROM python:3.7-slim
 LABEL maintainer="don@agilicus.com"
-
 ADD requirements.txt /tmp/requirements.txt
-RUN pip install -r /tmp/requirements.txt
-
-FROM python:3.7
 COPY api /web/api
-COPY --from=builder /usr/local/lib/python3.7/site-packages/ /usr/local/lib/python3.7/site-packages
-COPY --from=builder /usr/local/bin/ /usr/local/bin
-RUN adduser --disabled-password --gecos '' api \
+RUN pip install -r /tmp/requirements.txt \
+ && adduser --disabled-password --gecos '' api \
  && chown -R api:api /web
 WORKDIR /web
 USER api

@@ -2,12 +2,8 @@ import os
 import logging
 import connexion
 
-from werkzeug.contrib.fixers import ProxyFix
-from prometheus_flask_exporter import PrometheusMetrics
-
-from . import version
-from . import setup_logging
-
+from __init__ import setup_logging
+# from . import setup_logging
 
 LOG = logging.getLogger("api")
 LOG.addHandler(logging.StreamHandler())
@@ -18,15 +14,9 @@ def create_app():
     app = connexion.App(
         __name__, specification_dir='.',
         options={"swagger_ui": True})
-    app.app.wsgi_app = ProxyFix(app.app.wsgi_app, num_proxies=1)
     app.add_api('api.yaml')
 
-    application = app.app
     setup_logging(app)
-
-    metrics = PrometheusMetrics(application)
-    metrics.info("api", "Sample API service",
-                 version=version.__version__)
 
     @app.route('/healthz', methods=['GET'])
     def healthz():
