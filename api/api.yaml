@@ -1,0 +1,99 @@
+openapi: "3.0.0"
+info:
+  version: 0.0.1
+  title: "Sample API"
+components:
+  schemas:
+    ticket:
+      type: object
+      properties:
+        id:
+          type: string
+        user:
+          type: string
+        time:
+          type: string
+
+paths:
+  /tickets:
+    get:
+      summary: return a list of tickets
+      operationId: api.get_tickets
+      responses:
+        '200': 
+          description: A JSON list of tickets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ticket'
+
+  /ticket/{id}:
+    get:
+      summary: return a specific ticket
+      operationId: api.get_ticket
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: the ticket-id
+          schema:
+            type: string
+      responses:
+        '200': 
+          description: A single ticket in JSON
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ticket'
+    delete:
+      summary: return a specific ticket
+      operationId: api.delete_ticket
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: the ticket-id
+          schema:
+            type: string
+      responses:
+        '200': 
+          description: A single ticket in JSON
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ticket'
+  /ticket:
+    put:
+      summary: create a new ticket
+      operationId: api.put_ticket
+      requestBody:
+        description: the ticket to create
+        content:
+           application/json:
+             schema:
+               $ref: '#/components/schemas/ticket'
+      responses:
+        '200': 
+          description: A single ticket in JSON
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ticket'
+    post:
+      summary: update an existing ticket
+      operationId: api.post_ticket
+      requestBody:
+        description: the ticket to update
+        content:
+           application/json:
+             schema:
+               $ref: '#/components/schemas/ticket'
+      responses:
+        '200': 
+          description: A single ticket in JSON
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ticket'
